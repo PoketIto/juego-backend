@@ -17,17 +17,17 @@ app.get("/resultados", (req, res) => {
 
 // Ruta para agregar un nuevo resultado
 app.post("/resultados", (req, res) => {
-  const { tiempo, resultado } = req.body;
-  if (tiempo === undefined || !resultado) {
+  const { tiempoObjetivo, tiempoReal, resultado } = req.body;
+  if (!tiempoObjetivo || !tiempoReal || !resultado) {
     return res.status(400).json({ error: "Faltan datos" });
   }
 
-  // Agregar el resultado a la "base de datos"
-  resultados.push({ tiempo, resultado, fecha: new Date() });
+  resultados.push({
+    tiempoObjetivo,
+    tiempoReal,
+    resultado,
+    fecha: new Date(),
+  });
   res.status(201).json({ message: "Resultado guardado" });
 });
 
-// Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
-});
